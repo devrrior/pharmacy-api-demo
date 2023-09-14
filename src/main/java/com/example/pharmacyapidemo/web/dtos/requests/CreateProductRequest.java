@@ -1,7 +1,6 @@
 package com.example.pharmacyapidemo.web.dtos.requests;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class CreateProductRequest {

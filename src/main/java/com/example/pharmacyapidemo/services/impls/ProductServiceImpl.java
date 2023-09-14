@@ -33,7 +33,7 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public BaseResponse get(Long id) {
-        Product product = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        Product product = findOneAndEnsureExists(id);
 
         return BaseResponse.builder()
                 .data(product)
@@ -61,6 +61,11 @@ public class ProductServiceImpl implements IProductService {
                 .status(HttpStatus.OK)
                 .statusCode(HttpStatus.OK.value())
                 .build();
+    }
+
+    @Override
+    public Product findOneAndEnsureExists(Long id) {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
     }
 
     private Product from(CreateProductRequest request) {
