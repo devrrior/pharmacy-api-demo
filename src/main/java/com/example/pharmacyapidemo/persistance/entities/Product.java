@@ -1,5 +1,7 @@
 package com.example.pharmacyapidemo.persistance.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +25,7 @@ public class Product {
 
     private String imageURL;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "product")
     private List<CartItem> cartItems;
 }
