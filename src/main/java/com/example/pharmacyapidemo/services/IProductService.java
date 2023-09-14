@@ -5,4 +5,6 @@ import com.example.pharmacyapidemo.web.dtos.responses.BaseResponse;
 
 public interface IProductService {
     BaseResponse create(CreateProductRequest request);
+    BaseResponse get(Long id);
+    BaseResponse list(String query);
 }
