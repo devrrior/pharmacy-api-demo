@@ -59,6 +59,20 @@ public class CartItemServiceImpl implements ICartItemService {
                 .build();
     }
 
+    @Override
+    public BaseResponse delete(Long id) {
+        CartItem cartItem = findOneAndEnsureExists(id);
+
+        repository.delete(cartItem);
+
+        return BaseResponse.builder()
+                .message("CartItem deleted")
+                .success(Boolean.TRUE)
+                .status(HttpStatus.OK)
+                .statusCode(HttpStatus.OK.value())
+                .build();
+    }
+
     private CartItem from(CreateCartItemRequest request, Product product, Cart cart) {
         CartItem cartItem = new CartItem();
 

@@ -24,4 +24,9 @@ public class CartItemController {
     public ResponseEntity<BaseResponse> put(@PathVariable Long id, @RequestBody UpdateCartItemRequest request) {
         return service.update(id, request).apply();
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<BaseResponse> delete(@PathVariable Long id) {
+        return service.delete(id).apply();
+    }
 }
