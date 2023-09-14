@@ -8,7 +8,9 @@ import com.example.pharmacyapidemo.services.ICartItemService;
 import com.example.pharmacyapidemo.services.ICartService;
 import com.example.pharmacyapidemo.services.IProductService;
 import com.example.pharmacyapidemo.web.dtos.requests.CreateCartItemRequest;
+import com.example.pharmacyapidemo.web.dtos.requests.UpdateCartItemRequest;
 import com.example.pharmacyapidemo.web.dtos.responses.BaseResponse;
+import com.example.pharmacyapidemo.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,23 @@ public class CartItemServiceImpl implements ICartItemService {
                 .build();
     }
 
+    @Override
+    public BaseResponse update(Long id, UpdateCartItemRequest request) {
+        CartItem cartItem = findOneAndEnsureExists(id);
+
+        cartItem.setQuantity(request.getQuantity());
+
+        CartItem updatedCartItem = repository.save(cartItem);
+
+        return BaseResponse.builder()
+                .data(updatedCartItem)
+                .message("CartItem updated")
+                .success(Boolean.TRUE)
+                .status(HttpStatus.CREATED)
+                .statusCode(HttpStatus.CREATED.value())
+                .build();
+    }
+
     private CartItem from(CreateCartItemRequest request, Product product, Cart cart) {
         CartItem cartItem = new CartItem();
 
@@ -48,5 +67,9 @@ public class CartItemServiceImpl implements ICartItemService {
         cartItem.setCart(cart);
 
         return cartItem;
+    }
+
+    private CartItem findOneAndEnsureExists(Long id) {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("CartItem not found"));
     }
 }
