@@ -36,6 +36,19 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
+    public BaseResponse get(Long id) {
+        Cart cart = findOneAndEnsureExists(id);
+
+        return BaseResponse.builder()
+                .data(cart)
+                .message("Cart found")
+                .success(Boolean.TRUE)
+                .status(HttpStatus.OK)
+                .statusCode(HttpStatus.OK.value())
+                .build();
+    }
+
+    @Override
     public Cart findOneAndEnsureExists(Long id) {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
     }

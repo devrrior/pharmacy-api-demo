@@ -5,5 +5,6 @@ import com.example.pharmacyapidemo.web.dtos.responses.BaseResponse;
 
 public interface ICartService {
     BaseResponse create();
+    BaseResponse get(Long id);
     Cart findOneAndEnsureExists(Long id);
 }
